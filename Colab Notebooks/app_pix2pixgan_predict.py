@@ -47,6 +47,7 @@ def main( model_path ):
     for i in range(dataset.x_train.shape[0]):
         x_train_blur[i, :, :, 0] = ndimage.gaussian_filter(dataset.x_train[i, :, :, 0], sigma=1.5)
 
+    print('exec prediction')
     # prediction
     w = 10
     h = 10
@@ -55,16 +56,17 @@ def main( model_path ):
 
     print("Discriminator: prob =", prob.data)
 
-    if os.path.exists('./predict') is False:
-        os.makedirs('./predict')
+    dir ='./predict'
+    if os.path.exists(dir) is False:
+        os.makedirs(dir)
 
     img = tile_image(generated_image.data, w=w, h=h)
     pil = Image.fromarray( np.uint8( img * 255 ) )
-    pil.save('predict/pix2pixgan_generated.tif')
+    pil.save( dir + 'pix2pixgan_generated.tif')
 
     img = tile_image(x_train_blur.data, w=w, h=h)
     pil = Image.fromarray( np.uint8( img * 255 ) )
-    pil.save('predict/pix2pixgan_input.tif')
+    pil.save( dir + 'pix2pixgan_input.tif')
 
 if __name__ == '__main__':
     model_path = './model/pix2pixgan/epoch010'

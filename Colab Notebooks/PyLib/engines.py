@@ -214,7 +214,9 @@ class Engine_pix2pixGAN(Engine_Base):
 
     def save(self, save_path):
         if os.path.exists(save_path) is False:
+            print('create dir')
             os.makedirs( save_path )
+
         self.generator.save_weights( save_path + self.name_generator )
         self.discriminator.save_weights( save_path + self.name_discriminator )
         # model付帯情報
@@ -232,12 +234,12 @@ class Engine_mnist_GAN(Engine_Base):
 
         # create models
         self.generator = Model_mnist_GAN_Generator(
-                            model_path   = hyper_param.model_path, 
+                            model_path   = hyper_param.model_path + self.name_generator, 
                             dim_latent   = hyper_param.gene_dim_latent, 
                             dim_hidden   = hyper_param.gene_dim_hidden )
 
         self.discriminator = Model_mnist_GAN_Discriminator(
-                            model_path   = hyper_param.model_path, 
+                            model_path   = hyper_param.model_path + self.name_discriminator, 
                             shape        = hyper_param.disc_shape, 
                             dropout_rate = hyper_param.disc_dropout_rate )
         self.discriminator.compile(
