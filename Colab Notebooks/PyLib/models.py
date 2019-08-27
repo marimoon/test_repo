@@ -203,7 +203,7 @@ class Model_pix2pixGAN_Generator(Model):
         self.build_model()
         super(Model_pix2pixGAN_Generator, self).__init__(inputs=[self.input_img], outputs=[self.pred])
         if not model_path is None:
-            self.load_weights(model_path + '/model_p2pgan_generator.h5')
+            self.load_weights(model_path)
         self.summary()
 
     def build_model(self):
@@ -229,7 +229,7 @@ class Model_pix2pixGAN_Discriminator(Model):
         self.build_model()
         super(Model_pix2pixGAN_Discriminator, self).__init__(self.input_img, self.pred)
         if not model_path is None:
-            self.load_weights(model_path + '/model_p2pgan_discriminator.h5')
+            self.load_weights(model_path)
         self.summary()
 
     def build_model(self):
@@ -254,7 +254,7 @@ comment : This model is used for training of generator.
 class Model_pix2pixGAN_conbined(Model):
     def __init__(self, generator, discriminator):
         self.build_model(generator, discriminator)
-        super(Model_pix2pixGAN_conbined, self).__init__(self.input_latent, self.pred)
+        super(Model_pix2pixGAN_conbined, self).__init__(self.input_img, self.pred)
         self.summary()
 
     def build_model(self, generator, discriminator):
